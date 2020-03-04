@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">OpenVPN Config</h1>
+
+{% if not (get_config('server_ip')
+    and get_config('server_port')
+    and get_config('ca_cert')
+    and get_config('user_cert')
+    and get_config('user_key')
+    and get_config('tls_crypt')) %}
+
+<div class="row">
+    <form method="POST" id="openvpn-settings">
+        <div class="col-md-6 col-md-offset-3">
+            <p class="text-center">OpenVPN Settings</p>
+            <div class="form-group">
+                <div class="form-group">
+                    <label>Server IP</label>
+                    <input class="form-control" name='server_ip' type='text' placeholder="Server IP">
+                </div>
+                <div class="form-group">
+                    <label>Server Port</label>
+                    <input class="form-control" name='server_port' type='text' placeholder="Server Port">
+                </div>
+                <div class="form-group">
+                    <label>CA Certificate</label>
+                    <input class="form-control" name='ca_cert' type='text' placeholder="CA Certificate">
+                </div>
+                <div class="form-group">
+                    <label>User Certificate</label>
+                    <input class="form-control" name='user_cert' type='text' placeholder="User Certificate">
+                </div>
+                <div class="form-group">
+                    <label>User Key</label>
+                    <input class="form-control" name='user_key' type='text' placeholder="User Key">
+                </div>
+                <div class="form-group">
+                    <label>TLS Crypt</label>
+                    <input class="form-control" name='tls_crypt' type='text' placeholder="TLS Crypt">
+                </div>
+            </div>
+            <input id="nonce" name='nonce' type='hidden' value="{{ nonce }}">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <button type="submit" class="btn btn-success text-center">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% else %}
+
+<div class="row">
+    <a href="#">Reset OpenVPN Config</a>
+</div>
+
+{% endif %}
+
+{% endblock %}
