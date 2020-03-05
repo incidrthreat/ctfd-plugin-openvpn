@@ -7,10 +7,8 @@ assets = Blueprint("assets", __name__, template_folder="assets")
 def load(app):
     print("OpenVPN-Cfg plugin is ready!")
     app.register_blueprint(assets)
-    register_plugin_assets_directory(app, base_path='/plugins/ctfd-plugin-openvpn/assets/')
-
 
 @assets.route('/admin/openvpn', methods=['GET'])
-#@admins_only
+@admins_only
 def ovpncfg():
     return render_template('config.html') 
