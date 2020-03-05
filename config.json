@@ -1,4 +1,4 @@
 {
     "name": "OpenVPN Config",
-    "route": "/admin/openvpn-cfg"
+    "route": "/admin/openvpn"
 }
