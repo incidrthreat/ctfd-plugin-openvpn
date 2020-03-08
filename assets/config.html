@@ -10,12 +10,11 @@
     </div>
 </div>
 
-{% if not (get_config('server_ip')
-    and get_config('server_port')
-    and get_config('ca_cert')
-    and get_config('user_cert')
-    and get_config('user_key')
-    and get_config('tls_crypt')) %}
+{% if not (ovpn.server_ip|length
+    and ovpn.server_port|length
+    and ovpn.ca_cert|length
+    and ovpn.client_cert|length
+    and ovpn.ta_key|length) %}
 
 <div class="container">
     <div class="row">
@@ -33,22 +32,17 @@
                     </div>
                     <div class="form-group">
                         <label>CA Certificate</label>
-                        <input class="form-control" name='ca_cert' type='text' placeholder="CA Certificate">
+                        <textarea class="form-control" type="text" name="ca_cert" row=5 placeholder="CA Certificate"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>User Certificate</label>
-                        <input class="form-control" name='user_cert' type='text' placeholder="User Certificate">
-                    </div>
-                    <div class="form-group">
-                        <label>User Key</label>
-                        <input class="form-control" name='user_key' type='text' placeholder="User Key">
+                        <label>Client Certificate</label>
+                        <textarea class="form-control" type="text" name="client_cert" row=5 placeholder="Client Certificate"></textarea>
                     </div>
                     <div class="form-group">
                         <label>TLS Crypt</label>
-                        <input class="form-control" name='tls_crypt' type='text' placeholder="TLS Crypt">
+                        <textarea class="form-control" type="text"name="ta_key" row=5 placeholder="TLS Crypt Key"></textarea>
                     </div>
                 </div>
-                <input id="nonce" name='nonce' type='hidden' value="{{ nonce }}">
                 <div class="float-right">
                     <button type="submit" class="btn btn-success text-center">Submit</button>
                 </div>
@@ -59,8 +53,39 @@
 
 {% else %}
 
-<div class="row">
-    <a href="#">Reset OpenVPN Config</a>
+<div class="container">
+    <div class="row">
+        <form method="POST" id="openvpn-settings">
+            <div class="col-md-12">
+                <p class="text-center">OpenVPN Settings</p>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label>Server IP</label>
+                        <input class="form-control" type="text" name="server_ip" value="{{ ovpn.server_ip }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Server Port</label>
+                        <input class="form-control" type="text" name="server_port" value="{{ ovpn.server_port }}">
+                    </div>
+                    <div class="form-group">
+                        <label>CA Certificate</label>
+                        <textarea class="form-control" type="text" name="ca_cert" row=5>{{ ovpn.ca_cert }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Client Certificate</label>
+                        <textarea class="form-control" type="text" name="client_cert" row=5>{{ ovpn.client_cert }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>TLS Crypt</label>
+                        <textarea class="form-control" type="text"name="ta_key" row=5>{{ ovpn.ta_key }}</textarea>
+                    </div>
+                </div>
+                <div class="float-right">
+                    <button type="submit" class="btn btn-success text-center">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 {% endif %}
