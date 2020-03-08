@@ -36,7 +36,9 @@ def load(app):
 @admins_only
 def ovpncfg():
     ovpn = db.session.query(OpenVPN).get(1)
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return render_template('ovpnconfig.html', ovpn=ovpn), db.session.close()
+    elif request.method == 'POST':
         server_ip = request.form.get('server_ip')
         server_port = request.form.get('server_port')
         ca_cert = request.form.get('ca_cert')
@@ -51,6 +53,6 @@ def ovpncfg():
             ovpn.ca_cert = ca_cert
             ovpn.client_cert = client_cert
             ovpn.ta_key = ta_key
-    db.session.commit()
-    ovpn = db.session.query(OpenVPN).get(1)
-    return render_template('ovpnconfig.html', ovpn=ovpn), db.session.close()
+        db.session.commit()
+        ovpn = db.session.query(OpenVPN).get(1)
+        return render_template('ovpnconfig.html', ovpn=ovpn), db.session.close()
