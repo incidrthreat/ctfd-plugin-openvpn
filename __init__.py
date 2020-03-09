@@ -5,8 +5,10 @@ from flask import (
 )
 
 from CTFd.utils.decorators import admins_only, get_config
-from CTFd.plugins import register_plugin_assets_directory
+from CTFd.plugins import register_plugin_assets_directory, register_plugin_script, override_template
 from CTFd.models import db
+
+import os
 
 assets = Blueprint("assets", __name__, template_folder="assets")
 
@@ -29,6 +31,14 @@ class OpenVPN(db.Model):
 def load(app):
     app.db.create_all()
     app.register_blueprint(assets)
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    template_path = os.path.join(dir_path, 'templates/settings_new.html')
+    override_template('settings.html', open(template_path).read())
+
+    register_plugin_assets_directory(app, base_path='/plugins/ctfd-plugin-openvpn/assets/')
+    register_plugin_script('/plugins/ctfd-plugin-openvpn/assets/settings_new.js')
+
     print("OpenVPN-Cfg plugin is ready!")
     
 
