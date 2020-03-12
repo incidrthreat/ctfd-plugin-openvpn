@@ -1,8 +1,8 @@
-import "../../../themes/core/assets/js/pages/main";
-import { copyToClipboard } from "../../../themes/core/assets/js/utils";
+import "./main";
+import { copyToClipboard } from "../utils";
 import $ from "jquery";
-import CTFd from "../../../themes/core/assets/js/CTFd";
-import { ezAlert, ezQuery } from "../../../themes/core/assets/js/ezq";
+import CTFd from "../CTFd";
+import { ezAlert, ezQuery } from "../ezq";
 
 const error_template =
   '<div class="alert alert-danger alert-dismissable" role="alert">\n' +
